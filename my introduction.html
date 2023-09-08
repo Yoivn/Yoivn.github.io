@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" type="image/svg+xml" href="icon/雪花.svg">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>某宝の主页</title>
+    <link rel="stylesheet" href="css/style.css">
+
+    <script>
+        var msg = "你好，我是一名普通的大学生，现时2023年9月8日，本人就读于贵州大学计科学院，故乡是贵州黔东南，民族是神奇的苗族，爱好玩游戏，但玩不了大型3D，有可怕的3D眩晕阻挠了我游戏的征途！由于本次作业内容是制作一个个人网页，本人费尽九牛二虎之力自己手搓了此网页（因为懒，不想改大把大把的模板），虽然写得些许简单，但我已经很努力了@_@,而且介绍这种事情说实话也不知道说点啥，随便报一下自己的基本信息就ok了，谅解一下";
+        var i = 0;
+        function play() {
+            if (i <= msg.length) {
+                var text = document.getElementsByClassName("text")[0];
+                text.innerText = msg.substring(0, i);
+                setTimeout("play()", 100);
+                i++;
+            } else {
+                i = 0;
+                console.clear();
+                console.log("一次轮播结束，新一次轮播开始。");
+                setTimeout("play()", 60000);
+            }
+        }
+    </script>
+</head>
+
+<body onLoad="play()">
+
+    <div class="nav">
+        <a href="index.html">首页</a>
+        <a href="my introduction.html">个人简介</a>
+        <a href="school.html">学校概述</a>
+        <a href="#">个人作品</a>
+        <a href="like.html">兴趣收集</a>
+    </div>
+    <div class="welcome">
+        <h3 class="text"></h3>
+    </div>
+    <div style="margin: 20px;" class="myin">
+        <p style="font: 25px 宋体; color: rgb(194, 194, 195);margin-bottom: 10px;">
+            关于我：
+        </p>
+        <a href="https://space.bilibili.com/178190934?spm_id_from=333.1007.0.0">bilibili</a>
+        <a href="https://github.com/Yoivn">github</a>
+    </div>
+    <script>
+        function snow() {
+            //  1、定义一片雪花模板
+            var flake = document.createElement('div');
+            // 雪花字符 ❄❉❅❆✻✼❇❈❊✥✺
+            flake.innerHTML = '❅';
+            flake.style.cssText = 'position:absolute;color:#fff;';
+
+            //获取页面的高度 相当于雪花下落结束时Y轴的位置
+            var documentHieght = window.innerHeight;
+            //获取页面的宽度，利用这个数来算出，雪花开始时left的值
+            var documentWidth = window.innerWidth;
+
+            //定义生成一片雪花的毫秒数
+            var millisec = 250;
+            //2、设置第一个定时器，周期性定时器，每隔一段时间（millisec）生成一片雪花；
+            setInterval(function () { //页面加载之后，定时器就开始工作
+                //随机生成雪花下落 开始 时left的值，相当于开始时X轴的位置
+                var startLeft = Math.random() * documentWidth;
+
+                //随机生成雪花下落 结束 时left的值，相当于结束时X轴的位置
+                var endLeft = Math.random() * documentWidth;
+
+                //随机生成雪花大小
+                var flakeSize = 7 + 20 * Math.random();
+
+                //随机生成雪花下落持续时间
+                var durationTime = 7000 + 7000 * Math.random();
+
+                //随机生成雪花下落 开始 时的透明度
+                var startOpacity = 0.5 + 0.3 * Math.random();
+
+                //随机生成雪花下落 结束 时的透明度
+                var endOpacity = 0.2 + 0.2 * Math.random();
+
+                //克隆一个雪花模板
+                var cloneFlake = flake.cloneNode(true);
+
+                //第一次修改样式，定义克隆出来的雪花的样式
+                cloneFlake.style.cssText += `
+                        left: ${startLeft}px;
+                        opacity: ${startOpacity};
+                        font-size:${flakeSize}px;
+                        top:-25px;
+                            transition:${durationTime}ms;`;
+
+                //拼接到页面中
+                document.body.appendChild(cloneFlake);
+
+                //设置第二个定时器，一次性定时器，
+                //当第一个定时器生成雪花，并在页面上渲染出来后，修改雪花的样式，让雪花动起来；
+                setTimeout(function () {
+                    //第二次修改样式
+                    cloneFlake.style.cssText += `
+                                left: ${endLeft}px;
+                                top:${documentHieght}px;
+                                opacity:${endOpacity};`;
+
+                    //4、设置第三个定时器，当雪花落下后，删除雪花。
+                    setTimeout(function () {
+                        cloneFlake.remove();
+                    }, durationTime);
+                }, 0);
+
+            }, millisec);
+        }
+        snow();
+    </script>
+</body>
+
+</html>
